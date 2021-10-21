@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/services/admin.service';
 
 declare var jQuery:any;
@@ -14,8 +15,10 @@ export class LoginComponent implements OnInit {
 
   public user : any = {};
   public usuario : any = {};
+  public token : any = '';
   constructor(
-    private _adminService:AdminService
+    private _adminService:AdminService,
+    private _router:Router
   ) { 
       
     $('.cs-offcanvas-enabled').css({'padding-left':'0px','display':'block'});
@@ -23,6 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   login(loginForm: any){
@@ -36,7 +40,6 @@ export class LoginComponent implements OnInit {
 
       this._adminService.login_admin(data).subscribe(
         response=>{
-          console.log(response);
           if(response.data == undefined)
           {
             iziToast.error({
@@ -48,7 +51,12 @@ export class LoginComponent implements OnInit {
           }
           else
           {
-           
+           this.usuario = response.data;
+           localStorage.setItem('token',response.token);
+           localStorage.setItem('_id',response.data.id);
+           $('.cs-offcanvas-enabled').css({'padding-left':'','display':''});
+          $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':''});
+           this._router.navigate(['/']);
           }
         },
         error=>{
