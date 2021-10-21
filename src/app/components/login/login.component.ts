@@ -13,6 +13,7 @@ declare var iziToast:any;
 export class LoginComponent implements OnInit {
 
   public user : any = {};
+  public usuario : any = {};
   constructor(
     private _adminService:AdminService
   ) { 
@@ -36,6 +37,19 @@ export class LoginComponent implements OnInit {
       this._adminService.login_admin(data).subscribe(
         response=>{
           console.log(response);
+          if(response.data == undefined)
+          {
+            iziToast.error({
+              title:'Error',
+              class:'text-danger',
+              position:'topCenter',
+              message:response.message
+            })
+          }
+          else
+          {
+           
+          }
         },
         error=>{
           console.log(error);
