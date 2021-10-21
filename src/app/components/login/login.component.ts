@@ -20,13 +20,17 @@ export class LoginComponent implements OnInit {
     private _adminService:AdminService,
     private _router:Router
   ) { 
-      
-    $('.cs-offcanvas-enabled').css({'padding-left':'0px','display':'block'});
-    $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':'100%'});
+    this.token = this._adminService.getToken()
   }
 
   ngOnInit(): void {
-    
+    if( this.token )
+    {
+      this._router.navigate(['/']);
+      return;
+    }
+    $('.cs-offcanvas-enabled').css({'padding-left':'0px','display':'block'});
+    $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':'100%'});
   }
 
   login(loginForm: any){
@@ -51,12 +55,12 @@ export class LoginComponent implements OnInit {
           }
           else
           {
-           this.usuario = response.data;
-           localStorage.setItem('token',response.token);
-           localStorage.setItem('_id',response.data.id);
-           $('.cs-offcanvas-enabled').css({'padding-left':'','display':''});
-          $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':''});
-           this._router.navigate(['/']);
+            this.usuario = response.data;
+            localStorage.setItem('token',response.token);
+            localStorage.setItem('_id',response.data.id);
+            $('.cs-offcanvas-enabled').css({'padding-left':'','display':''});
+            $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':''});
+            this._router.navigate(['/']);
           }
         },
         error=>{

@@ -20,4 +20,8 @@ export class AdminService {
     return this._http.post(this.url+'login_admin',data,{headers})
   }
 
+  getToken(){
+    return localStorage.getItem('token');
+  }
+
 }
