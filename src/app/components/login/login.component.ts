@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
 
 declare var jQuery:any;
 declare var $:any;
@@ -12,7 +13,9 @@ declare var iziToast:any;
 export class LoginComponent implements OnInit {
 
   public user : any = {};
-  constructor() { 
+  constructor(
+    private _adminService:AdminService
+  ) { 
       
     $('.cs-offcanvas-enabled').css({'padding-left':'0px','display':'block'});
     $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':'100%'});
@@ -25,8 +28,19 @@ export class LoginComponent implements OnInit {
     
     if(loginForm.valid)
     {
-      console.log(this.user);
-      alert("valido")
+      let data ={
+        email:this.user.email,
+        password:this.user.password
+      }
+
+      this._adminService.login_admin(data).subscribe(
+        response=>{
+          console.log(response);
+        },
+        error=>{
+          console.log(error);
+        }
+      );
     }
     else
     {
