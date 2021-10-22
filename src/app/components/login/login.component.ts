@@ -20,15 +20,18 @@ export class LoginComponent implements OnInit {
     private _adminService:AdminService,
     private _router:Router
   ) { 
-    this.token = this._adminService.getToken()
+    this.token = this._adminService.getToken()    
   }
 
   ngOnInit(): void {
+
+   
     if( this.token )
     {
       this._router.navigate(['/']);
       return;
     }
+    
     $('.cs-offcanvas-enabled').css({'padding-left':'0px','display':'block'});
     $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':'100%'});
   }
@@ -57,7 +60,7 @@ export class LoginComponent implements OnInit {
           {
             this.usuario = response.data;
             localStorage.setItem('token',response.token);
-            localStorage.setItem('_id',response.data.id);
+            localStorage.setItem('_id',response.data._id);
             $('.cs-offcanvas-enabled').css({'padding-left':'','display':''});
             $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':''});
             this._router.navigate(['/']);
