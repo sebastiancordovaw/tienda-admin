@@ -1,5 +1,6 @@
 import { isGeneratedFile } from '@angular/compiler/src/aot/util';
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/services/admin.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
@@ -14,7 +15,10 @@ export class IndexClienteComponent implements OnInit {
   public filtro_email = '';
   public page = 1;
   public pageSize = 1;
-  constructor(private _clienteService:ClienteService) { }
+  constructor(
+    private _clienteService:ClienteService,
+    private _adminService:AdminService
+    ) { }
 
   ngOnInit(): void {
     this.init_data();
@@ -22,7 +26,7 @@ export class IndexClienteComponent implements OnInit {
 
   init_data()
   {
-    this._clienteService.listar_clientes_filtro_admin(null,null).subscribe(
+    this._clienteService.listar_clientes_filtro_admin(null,null,this._adminService.getToken()).subscribe(
       response=>{
         this.clientes = response.data;
       },
@@ -50,7 +54,7 @@ export class IndexClienteComponent implements OnInit {
       return;
     }
 
-    this._clienteService.listar_clientes_filtro_admin(tipo,filtro).subscribe(
+    this._clienteService.listar_clientes_filtro_admin(tipo,filtro,this._adminService.getToken()).subscribe(
       response=>{
         this.clientes = response.data;
       },
