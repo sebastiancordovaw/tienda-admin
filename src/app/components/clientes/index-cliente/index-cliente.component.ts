@@ -11,7 +11,9 @@ export class IndexClienteComponent implements OnInit {
 
   public clientes : Array<any>=[];
   public filtro_apellidos = "";
-  public filtro_email = ''
+  public filtro_email = '';
+  public page = 1;
+  public pageSize = 1;
   constructor(private _clienteService:ClienteService) { }
 
   ngOnInit(): void {

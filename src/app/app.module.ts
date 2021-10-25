@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 //agregados manualmente
 import { FormsModule } from "@angular/forms";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
-
+import { NgbPaginationModule } from "@ng-bootstrap/ng-bootstrap";
 
 
 import { routing } from "./app.routing";
@@ -30,7 +30,8 @@ import { IndexClienteComponent } from './components/clientes/index-cliente/index
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    routing
+    routing,
+    NgbPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
