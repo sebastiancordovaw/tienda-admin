@@ -12,9 +12,10 @@ export class ClienteService {
     this.url=GLOBAL.url;
   }
   
-  listar_clientes_filtro_admin():Observable<any>{
+  listar_clientes_filtro_admin(tipo:any, filtro:any):Observable<any>{
+    
     let headers = new HttpHeaders().set('Content-Type','application/json');
-    return this._http.post(this.url+'login_admin',{headers})
+    return this._http.get(this.url+'listar_clientes_filtro_admin/'+tipo+"/"+filtro,{headers})
   }
 
 }

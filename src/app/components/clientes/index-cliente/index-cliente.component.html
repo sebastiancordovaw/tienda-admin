@@ -1,4 +1,5 @@
 <app-sidebar></app-sidebar>
+
 <!-- Page title-->
 <div class="border-bottom pt-5 mt-2 mb-5">
     <h1 class="mt-2 mt-md-4 mb-3 pt-5">Clientes</h1>
@@ -14,16 +15,14 @@
                 <div class="card-header">
                     <form class="form-inline pt-2">
                         <label class="sr-only" for="inline-form-input-name">Apellidos</label>
-                        <input class="form-control mb-3 mr-sm-4" type="text" id="inline-form-input-name" placeholder="John Doe">
+                        <input class="form-control mb-3 mr-sm-4" type="text" name="filtro_apellidos" [(ngModel)]="filtro_apellidos" (keyup)="filtro('apellidos')" placeholder="Apellidos">
                         <label class="sr-only" for="inline-form-input-username">Correo</label>
                         <div class="input-group mb-3 mr-sm-4">
                         <div class="input-group-prepend">
                             <div class="input-group-text">@</div>
                         </div>
-                        <input class="form-control" type="text" id="inline-form-input-username" placeholder="Username">
+                        <input class="form-control" type="text" name="filtro_email" [(ngModel)]="filtro_email"  (keyup)="filtro('email')" placeholder="Correo">
                         </div>
-                    
-                        <button class="btn btn-primary mb-3" type="submit">Buscar cliente</button>
                     </form>
                 </div>
                 <div class="card-body">
@@ -32,28 +31,26 @@
                           <thead>
                             <tr>
                               <th>#</th>
-                              <th>First Name</th>
-                              <th>Last Name</th>
-                              <th>Position</th>
-                              <th>Phone</th>
+                              <th>Nombre</th>
+                              <th>Apellido</th>
+                              <th>Email</th>
+                              <th>Acciones</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody *ngFor="let cliente of clientes; let indice = index" >
                             <tr>
-                              <th scope="row">1</th>
-                              <td>John</td>
-                              <td>Doe</td>
-                              <td>CEO, Founder</td>
+                              <td>{{indice+1}}</td>
+                              <td>{{cliente.nombres}}</td>
+                              <td>{{cliente.apellidos}}</td>
+                              <td>{{cliente.email}}</td>
                               <td>
                                 <div class="btn-group dropdown">
                                     <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Dropdown
+                                      opciones
                                     </button>
                                     <div class="dropdown-menu">
-                                      <a href="#" class="dropdown-item">Action</a>
-                                      <a href="#" class="dropdown-item">Another action</a>
-                                      <div class="dropdown-divider"></div>
-                                      <a href="#" class="dropdown-item">Something else here</a>
+                                      <a href="#" class="dropdown-item">Editar</a>
+                                      <a href="#" class="dropdown-item">Eliminar</a>
                                     </div>
                                   </div>
                               </td>
