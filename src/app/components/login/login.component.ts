@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
    
     if( this.token )
     {
-      this._router.navigate(['/']);
+      this._router.navigate(['/inicio']);
       return;
     }
     
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('_id',response.data._id);
             $('.cs-offcanvas-enabled').css({'padding-left':'','display':''});
             $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':''});
-            this._router.navigate(['/']);
+            this._router.navigate(['/incio']);
           }
         },
         error=>{
