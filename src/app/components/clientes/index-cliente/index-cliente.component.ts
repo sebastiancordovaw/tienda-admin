@@ -1,14 +1,16 @@
 import { isGeneratedFile } from '@angular/compiler/src/aot/util';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { ClienteService } from 'src/app/services/cliente.service';
-
+declare var jQuery:any;
+declare var $:any;
+declare var iziToast:any;
 @Component({
   selector: 'app-index-cliente',
   templateUrl: './index-cliente.component.html',
   styleUrls: ['./index-cliente.component.css']
 })
-export class IndexClienteComponent implements OnInit {
+export class IndexClienteComponent implements OnInit, DoCheck {
 
   public clientes : Array<any>=[];
   public filtro_apellidos = "";
@@ -18,10 +20,21 @@ export class IndexClienteComponent implements OnInit {
   constructor(
     private _clienteService:ClienteService,
     private _adminService:AdminService
-    ) { }
+    ) { 
+
+      
+    }
 
   ngOnInit(): void {
     this.init_data();
+    
+
+  }
+
+  ngDoCheck() {
+    $(".btn-close").click(function(){
+      $(".modal").modal("hide");
+    });
   }
 
   init_data()
@@ -64,6 +77,30 @@ export class IndexClienteComponent implements OnInit {
       }
     )
 
+  }
+
+  eliminar(id:any)
+  {
+    if(id)
+    {
+      this._clienteService.eliminar_cliente_admin(id,this._adminService.getToken()).subscribe(
+        response=>{
+          iziToast.success({
+            title:'Success',
+            class:'text-danger',
+            position:'topCenter',
+            message:'Cliente eliminado correctamente'
+          });
+
+          $("#delete-"+id).modal("hide");
+          this.init_data();
+        },
+        error=>{
+          console.log(error);
+        }
+      );
+    }
+    
   }
 
 }

@@ -49,8 +49,25 @@
                                       opciones
                                     </button>
                                     <div class="dropdown-menu">
-                                      <a href="#" class="dropdown-item">Editar</a>
-                                      <a href="#" class="dropdown-item">Eliminar</a>
+                                      <a [routerLink]="['/panel/clientes/',cliente._id]" class="dropdown-item">Editar</a>
+                                      <a style="cursor: pointer;" data-toggle="modal" [attr.data-target]="'#delete-'+cliente._id" class="dropdown-item">Eliminar</a>
+                                    </div>
+                                  </div>
+                                  <div class="modal fade" id="delete-{{cliente._id}}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Eliminar </h4>
+                                          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p class="fs-sm">{{cliente.nombres}} {{cliente.apellidos}}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button class="btn btn-secondary btn-sm btn-close" type="button" data-bs-dismiss="modal">Close</button>
+                                          <button class="btn btn-primary btn-sm"  (click)='eliminar(cliente._id)' type="button">Save changes</button>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                               </td>
