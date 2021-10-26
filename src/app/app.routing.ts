@@ -6,6 +6,7 @@ import { IndexClienteComponent } from "./components/clientes/index-cliente/index
 import { AdminGuard } from "./guards/admin.guard";// para proteger rutas
 
 const appRoute : Routes = [
+    {path:'',redirectTo:'inicio', pathMatch:'full'},
     {path:'inicio',component:InicioComponent, canActivate:[AdminGuard]},
     {path:'panel', children:[
         {path:'clientes', component:IndexClienteComponent, canActivate:[AdminGuard]}
