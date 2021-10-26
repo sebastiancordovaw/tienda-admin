@@ -24,6 +24,23 @@ export class ClienteService {
     return this._http.post(this.url+'registro_cliente_admin',cliente,{headers});
   }
 
+  obtener_cliente_admin(id:any,token:any):Observable<any>{
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token });
+    return this._http.get(this.url+'obtener_cliente_admin/'+id,{headers});
+  }
+
+  actualizar_cliente_admin(id:any,cliente:any,token:any):Observable<any>{
+
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token });
+    return this._http.put(this.url+'actualizar_cliente_admin/'+id,cliente,{headers});
+  }
+
+  eliminar_cliente_admin(id:any,token:any):Observable<any>{
+
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token });
+    return this._http.delete(this.url+'eliminar_cliente_admin/'+id,{headers});
+  }
+
 
   
 }
