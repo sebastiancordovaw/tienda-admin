@@ -10,10 +10,16 @@
 </div>
 <form  #updateC="ngForm" (ngSubmit)="actualizar(updateC)">
 <div class="card box-shadow-sm">
+  
     <div class="card-header">
-        <h5 style="margin-bottom: 0px;">Actualizar de cliente</h5>
+        <h5 style="margin-bottom: 0px;">
+          Actualizar de cliente
+          <div *ngIf="load_data" class="spinner-grow spinner-grow-sm" role="status" style="position: relative; top: -3px; left: 15px;" >
+    
+          </div>
+        </h5>
     </div>
-    <div class="card-body" *ngIf='cliente != undefined'>
+    <div class="card-body" *ngIf='cliente != undefined && load_data==false'>
         
           <div class="row">
             <div class="col-md-4 form-group">
@@ -53,11 +59,15 @@
           </div>
 
     </div>
-    <div class="card-body" *ngIf='cliente == undefined'>
+    <div class="card-body" *ngIf='cliente == undefined && load_data==false'>
         <h1>No se ha encontrado registro</h1>
     </div>
     <div class="card-footer">
-        <button class="btn btn-primary mr-3" type="submit">Actualizar cliente</button>
+        <button *ngIf="!boton_actualizar && cliente != undefined && load_data == false "class="btn btn-primary mr-3" type="submit">Actualizar cliente</button>
+        <button *ngIf="boton_actualizar" type="button" class="btn btn-secondary" disabled>
+          <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+          Loading...
+        </button>
         <a class="btn btn-warning" [routerLink]="['/panel/clientes']">Regresar</a>
     </div>
 </div>    
