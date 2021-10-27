@@ -19,6 +19,7 @@ export class CreateProductoComponent implements OnInit {
   public file : any = undefined;
   public imgSelect:any|ArrayBuffer = 'assets/img/01.jpg';
   public config:any = {};
+  public boton_crear:boolean = false;
   constructor(private _productoService:ProductoService,
               private _adminService:AdminService,
               private _router:Router) { 
@@ -33,6 +34,7 @@ export class CreateProductoComponent implements OnInit {
   {
     if(registroForm.valid && this.file!=undefined)
     {
+      this.boton_crear=true;
       this._productoService.registro_producto_admin(this.producto,this.file,this._adminService.getToken()).subscribe(
         response=>{
           iziToast.success({
@@ -49,11 +51,12 @@ export class CreateProductoComponent implements OnInit {
             contenido: '',
             categoria: '',
             portada: ''}
-            
+          this.boton_crear=false;  
           this._router.navigate(['/panel/productos']);
         },
         error=>{
           console.log(error);
+          this.boton_crear=false;  
         }
       );
     }
@@ -64,7 +67,8 @@ export class CreateProductoComponent implements OnInit {
         class:'text-danger',
         position:'topCenter',
         message:'los datos no son validos'
-      })
+      });
+      this.boton_crear=false;  
     }
   }
 
