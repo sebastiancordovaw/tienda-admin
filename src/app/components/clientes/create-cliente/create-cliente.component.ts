@@ -13,6 +13,8 @@ export class CreateClienteComponent implements OnInit {
   public cliente:any={
     genero:'',
   };
+  public boton_crear:boolean = false;
+
   constructor(
     private _clienteService:ClienteService,
     private _adminService: AdminService,
@@ -26,6 +28,7 @@ export class CreateClienteComponent implements OnInit {
   {
     if(registroCLiente.valid)
     {
+      this.boton_crear=true;
       this._clienteService.registro_cliente_admin(this.cliente, this._adminService.getToken()).subscribe(
         response=>{
           iziToast.success({
@@ -42,6 +45,8 @@ export class CreateClienteComponent implements OnInit {
             genero:'',
             f_nacimiento:'',
             dni:''}
+            
+          this.boton_crear=false;
           this._router.navigate(['/panel/clientes']);
         },
         error=>{

@@ -12,8 +12,10 @@ declare var iziToast:any;
 })
 export class EditClienteComponent implements OnInit {
 
-  public cliente:any={};
+  public cliente:any=undefined;
   public id = '';
+  public boton_actualizar:boolean = false;
+  public load_data:boolean = true;
   constructor(
     private _route : ActivatedRoute,
     private _clienteService : ClienteService,
@@ -29,19 +31,22 @@ export class EditClienteComponent implements OnInit {
           response=>{
             if(response.data!=undefined)
             {
-              this.cliente = response.data;
-              return;
+                this.cliente = response.data;
+                this.load_data=false;
+                return;
             }
-            this.cliente = undefined;
+            this.load_data=false;
+            this.cliente = undefined; 
           },
           error=>{
             console.log('pasandooo');
+            this.load_data=false;
            
           }
         )
       },
       error=>{
-
+        this.load_data=false;
       }
     )
   }
@@ -50,6 +55,7 @@ export class EditClienteComponent implements OnInit {
   {
     if(updateC.valid)
     {
+      this.boton_actualizar=true;
       this._clienteService.actualizar_cliente_admin(this.id,this.cliente,this._adminService.getToken()).subscribe(
         response=>{
           iziToast.success({
@@ -58,6 +64,7 @@ export class EditClienteComponent implements OnInit {
             position:'topCenter',
             message:'Se actualizo correctamebnte'
           })
+          this.boton_actualizar=false;
           this._router.navigate(['/panel/clientes']);
         },
         error=>{

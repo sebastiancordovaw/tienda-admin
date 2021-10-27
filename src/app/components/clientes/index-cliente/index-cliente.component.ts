@@ -17,6 +17,8 @@ export class IndexClienteComponent implements OnInit, DoCheck {
   public filtro_email = '';
   public page = 1;
   public pageSize = 1;
+  public loading:boolean = true;
+  public boton_eliminar:boolean = false;
   constructor(
     private _clienteService:ClienteService,
     private _adminService:AdminService
@@ -42,6 +44,7 @@ export class IndexClienteComponent implements OnInit, DoCheck {
     this._clienteService.listar_clientes_filtro_admin(null,null,this._adminService.getToken()).subscribe(
       response=>{
         this.clientes = response.data;
+        this.loading=false;
       },
       error=>
       {
@@ -66,10 +69,11 @@ export class IndexClienteComponent implements OnInit, DoCheck {
       this.init_data();
       return;
     }
-
+    this.loading=true;
     this._clienteService.listar_clientes_filtro_admin(tipo,filtro,this._adminService.getToken()).subscribe(
       response=>{
-        this.clientes = response.data;
+          this.loading=false;
+          this.clientes = response.data;
       },
       error=>
       {
@@ -83,17 +87,18 @@ export class IndexClienteComponent implements OnInit, DoCheck {
   {
     if(id)
     {
+      this.boton_eliminar=true;
       this._clienteService.eliminar_cliente_admin(id,this._adminService.getToken()).subscribe(
         response=>{
-          iziToast.success({
-            title:'Success',
-            class:'text-danger',
-            position:'topCenter',
-            message:'Cliente eliminado correctamente'
-          });
-
-          $("#delete-"+id).modal("hide");
-          this.init_data();
+            iziToast.success({
+              title:'Success',
+              class:'text-danger',
+              position:'topCenter',
+              message:'Cliente eliminado correctamente'
+            });
+             this.boton_eliminar=false;
+             $("#delete-"+id).modal("hide");
+             this.init_data();
         },
         error=>{
           console.log(error);

@@ -59,11 +59,12 @@ export class LoginComponent implements OnInit {
           else
           {
             this.usuario = response.data;
+            
             localStorage.setItem('token',response.token);
             localStorage.setItem('_id',response.data._id);
             $('.cs-offcanvas-enabled').css({'padding-left':'','display':''});
             $('.cs-offcanvas-enabled > .col-xl-9').css({'max-width':''});
-            this._router.navigate(['/incio']);
+            this._router.navigate(['/inicio']);
           }
         },
         error=>{
