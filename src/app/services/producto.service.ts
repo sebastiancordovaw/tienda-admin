@@ -26,4 +26,16 @@ export class ProductoService {
     fd.append('portada',file);
     return this._http.post(this.url+'registro_producto_admin',fd,{headers});
   }
+
+  listar_producto_filtro_admin(filtro:any,token:any):Observable<any>{
+
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token });
+    return this._http.get(this.url+'listar_producto_filtro_admin/'+filtro,{headers})
+  }
+
+  eliminar_producto_admin(id:any,token:any):Observable<any>{
+
+    let headers = new HttpHeaders({'Content-Type':'application/json','Authorization':token });
+    return this._http.delete(this.url+'eliminar_producto_admin/'+id,{headers});
+  }
 }
